@@ -29,11 +29,6 @@
 
 #pragma once
 
-#include <Windows.h>
-#define HSPRITE DeletedWinapi_HSPRITE
-#include <wrect.h>
-#include <cl_dll.h>
-#include <r_efx.h>
 #include "Meta_Api.h"
 
 // ===== macros for void-returning functions ==================================
