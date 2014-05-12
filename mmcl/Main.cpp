@@ -27,9 +27,13 @@
 *  version.
 */
 
+
+
 #include "ClientDLLHooks.h"
 #include "Hooks.h"
 #include "Plugins.h"
+#include "interface.h"
+#include "Main.h"
 
 hook hLoadLibraryA;
 int giLoaded = 0;
@@ -51,6 +55,8 @@ HMODULE WINAPI LoadLibraryA_HookHandler(LPCTSTR lpFileName)
 	return hRet;
 }
 
+
+
 int APIENTRY DllMain(HMODULE hDLL, DWORD Reason, LPVOID Reserved)
 {
 	switch(Reason)
@@ -69,6 +75,31 @@ int APIENTRY DllMain(HMODULE hDLL, DWORD Reason, LPVOID Reserved)
 	}
 
 	return TRUE;
+}
+
+
+/*Basis for .asi
+Doesn't used yet because we need to find some other way to get cl_enginefunc_t address
+Initialize_HookHandler hook would not work, because .asi-files loads after it.
+*/
+EXPORT_FUNCTION S32 AILCALL RIB_Main(	
+	HPROVIDER provider_handle,
+	U32 up_down,
+	RIB_alloc_provider_handle_ptr RIB_alloc_provider_handle,
+	RIB_register_interface_ptr RIB_register_interface,
+	RIB_unregister_interface_ptr RIB_unregister_interface
+	)
+{
+		
+		if (up_down)
+		{
+			
+		}
+		else
+		{
+			
+		}
+		return TRUE;
 }
 
 extern "C" int __declspec( dllexport ) Init() { return 1; }
