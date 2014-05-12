@@ -65,6 +65,11 @@
 if not exist "$(HLDIR)\mmcl\$(ProjectName)" mkdir "$(HLDIR)\mmcl\$(ProjectName)"
 copy $(TargetPath) "$(HLDIR)\mmcl\$(ProjectName)\$(TargetFileName)"</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>if exist "$(HLDIR)" exit 0
+echo HLDIR not exists. Fix it in Custom props.
+exit 1</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -84,6 +89,11 @@ copy $(TargetPath) "$(HLDIR)\mmcl\$(ProjectName)\$(TargetFileName)"</Command>
 if not exist "$(HLDIR)\mmcl\$(ProjectName)" mkdir "$(HLDIR)\mmcl\$(ProjectName)"
 copy $(TargetPath) "$(HLDIR)\mmcl\$(ProjectName)\$(TargetFileName)"</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>if exist "$(HLDIR)" exit 0
+echo HLDIR not exists. Fix it in Custom props.
+exit 1</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />

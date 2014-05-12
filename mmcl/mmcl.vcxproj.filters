@@ -16,6 +16,9 @@
     <Filter Include="Source Files\EngineLoader">
       <UniqueIdentifier>{2ce77b66-4398-4cd8-b53b-841b51cd64a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\EngineLoader">
+      <UniqueIdentifier>{22231d25-1dea-4538-bbe7-86e8dfba9bdd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ClientDLLHooks.cpp">

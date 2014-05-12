@@ -105,6 +105,11 @@
     <PostBuildEvent>
       <Command>copy $(TargetPath) $(HLDIR)\$(TargetFileName)</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>if exist "$(HLDIR)" exit 0
+echo HLDIR not exists. Fix it in Custom props.
+exit 1</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='EXE_Debug|Win32'">
     <ClCompile>
@@ -118,6 +123,11 @@
     <PostBuildEvent>
       <Command>copy $(TargetPath) $(HLDIR)\$(TargetFileName)</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>if exist "$(HLDIR)" exit 0
+echo HLDIR not exists. Fix it in Custom props.
+exit 1</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -135,6 +145,11 @@
     <PostBuildEvent>
       <Command>copy $(TargetPath) $(HLDIR)\$(TargetFileName)</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>if exist "$(HLDIR)" exit 0
+echo HLDIR not exists. Fix it in Custom props.
+exit 1</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='EXE_Release|Win32'">
     <ClCompile>
@@ -152,6 +167,11 @@
     <PostBuildEvent>
       <Command>copy $(TargetPath) $(HLDIR)\$(TargetFileName)</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>if exist "$(HLDIR)" exit 0
+echo HLDIR not exists. Fix it in Custom props.
+exit 1</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ClientDLLHooks.cpp" />
