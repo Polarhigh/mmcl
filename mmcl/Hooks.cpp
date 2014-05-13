@@ -26,8 +26,7 @@
 *  you do not wish to do so, delete this exception statement from your
 *  version.
 */
-
-#include <Windows.h>
+#include "stdafx.h"
 #include "Hooks.h"
 
 void RedirectFunction(hook *pHook, LPVOID oldFunctionAddr, LPVOID newFunction)

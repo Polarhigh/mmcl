@@ -33,8 +33,26 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Main_exe.cpp">
+    <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="interface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CInterfaceLoader.cpp">
+      <Filter>Source Files\EngineLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugHelp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CParms.cpp">
+      <Filter>Source Files\EngineLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="CRegistry.cpp">
+      <Filter>Source Files\EngineLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="CEngineLoader.cpp">
+      <Filter>Source Files\EngineLoader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -50,14 +68,43 @@
     <ClInclude Include="Plugins.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Meta_Api.h">
+    <ClInclude Include="Main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Main.h">
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="interface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CInterfaceLoader.h">
+      <Filter>Header Files\EngineLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugHelp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CEngineLoader.h">
+      <Filter>Header Files\EngineLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="CParms.h">
+      <Filter>Header Files\EngineLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="CRegistry.h">
+      <Filter>Header Files\EngineLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="GPL.txt" />
+    <None Include="mmcl.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="mmcl.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

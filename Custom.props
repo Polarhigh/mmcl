@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
-    <HLDIR>D:\Steam\SteamApps\common\Half-Life</HLDIR>
+    <HLDIR>D:\Stuff\CStrike\CS</HLDIR>
     <HLEXE>hl.exe</HLEXE>
     <HLATTRIB>-game cstrike</HLATTRIB>
   </PropertyGroup>

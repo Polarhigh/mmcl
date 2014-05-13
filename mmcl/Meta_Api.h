@@ -29,24 +29,6 @@
 
 #pragma once
 
-#include <Windows.h>
-#define HSPRITE DeletedWinapi_HSPRITE
-#include <wrect.h>
-#include <cl_dll.h>
-#include <cl_entity.h>
-#include <com_model.h>
-#include <cvardef.h>
-#include <demo_api.h>
-#include <ivoicetweak.h>
-#include <net_api.h>
-#include <particledef.h>
-#include <pmtrace.h>
-#include <r_efx.h>
-#include <r_studioint.h>
-#include <ref_params.h>
-#include <triangleapi.h>
-#include <usercmd.h>
-#include <weaponinfo.h>
 
 typedef enum {
 	MRES_UNSET = 0,

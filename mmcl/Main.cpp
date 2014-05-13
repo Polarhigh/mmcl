@@ -28,12 +28,13 @@
 */
 
 
-
+#include "stdafx.h"
 #include "ClientDLLHooks.h"
 #include "Hooks.h"
 #include "Plugins.h"
-#include "interface.h"
 #include "Main.h"
+#include "CInterfaceLoader.h"
+#include "CEngineLoader.h"
 
 hook hLoadLibraryA;
 int giLoaded = 0;
@@ -56,6 +57,19 @@ HMODULE WINAPI LoadLibraryA_HookHandler(LPCTSTR lpFileName)
 }
 
 
+int _stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
+{
+
+	WSAData WSAData;
+	WSAStartup(2, &WSAData);
+	Sys_LoadModule("steam_api");
+	EngineLoader.Run();
+	
+	gInterface.ShutDown();
+
+
+	return 0;
+}
 
 int APIENTRY DllMain(HMODULE hDLL, DWORD Reason, LPVOID Reserved)
 {

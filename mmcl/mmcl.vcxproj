@@ -97,7 +97,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Include\HLSDK\common;$(SolutionDir)\Include\HLSDK\engine;$(SolutionDir)\Include\HLSDK\pm_shared;$(SolutionDir)\Include\HLSDK\dlls;$(SolutionDir)\Include\HLSDK\cl_dll;$(SolutionDir)\Include\HLSDK\public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Include\HLSDK\common;$(SolutionDir)\Include\HLSDK\engine;$(SolutionDir)\Include\HLSDK\pm_shared;$(SolutionDir)\Include\HLSDK\dlls;$(SolutionDir)\Include\HLSDK\cl_dll;$(SolutionDir)\Include\HLSDK\public;$(SolutionDir)\Include\HLSDK\interfaces;$(SolutionDir)\Include\mmcl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PreprocessorDefinitions>_DEBUG;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -115,7 +117,9 @@ exit 1</Command>
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Include\HLSDK\common;$(SolutionDir)\Include\HLSDK\engine;$(SolutionDir)\Include\HLSDK\pm_shared;$(SolutionDir)\Include\HLSDK\dlls;$(SolutionDir)\Include\HLSDK\cl_dll;$(SolutionDir)\Include\HLSDK\public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Include\HLSDK\common;$(SolutionDir)\Include\HLSDK\engine;$(SolutionDir)\Include\HLSDK\pm_shared;$(SolutionDir)\Include\HLSDK\dlls;$(SolutionDir)\Include\HLSDK\cl_dll;$(SolutionDir)\Include\HLSDK\public;$(SolutionDir)\Include\HLSDK\interfaces;$(SolutionDir)\Include\mmcl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PreprocessorDefinitions>_DEBUG;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -135,7 +139,9 @@ exit 1</Command>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Include\HLSDK\common;$(SolutionDir)\Include\HLSDK\engine;$(SolutionDir)\Include\HLSDK\pm_shared;$(SolutionDir)\Include\HLSDK\dlls;$(SolutionDir)\Include\HLSDK\cl_dll;$(SolutionDir)\Include\HLSDK\public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Include\HLSDK\common;$(SolutionDir)\Include\HLSDK\engine;$(SolutionDir)\Include\HLSDK\pm_shared;$(SolutionDir)\Include\HLSDK\dlls;$(SolutionDir)\Include\HLSDK\cl_dll;$(SolutionDir)\Include\HLSDK\public;$(SolutionDir)\Include\HLSDK\interfaces;$(SolutionDir)\Include\mmcl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PreprocessorDefinitions>NDEBUG;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -157,7 +163,9 @@ exit 1</Command>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Include\HLSDK\common;$(SolutionDir)\Include\HLSDK\engine;$(SolutionDir)\Include\HLSDK\pm_shared;$(SolutionDir)\Include\HLSDK\dlls;$(SolutionDir)\Include\HLSDK\cl_dll;$(SolutionDir)\Include\HLSDK\public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Include\HLSDK\common;$(SolutionDir)\Include\HLSDK\engine;$(SolutionDir)\Include\HLSDK\pm_shared;$(SolutionDir)\Include\HLSDK\dlls;$(SolutionDir)\Include\HLSDK\cl_dll;$(SolutionDir)\Include\HLSDK\public;$(SolutionDir)\Include\HLSDK\interfaces;$(SolutionDir)\Include\mmcl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PreprocessorDefinitions>NDEBUG;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -174,25 +182,52 @@ exit 1</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ClientDLLHooks.cpp" />
-    <ClCompile Include="Main_exe.cpp" />
-    <ClCompile Include="Hooks.cpp" />
-    <ClCompile Include="Main.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='EXE_Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='EXE_Release|Win32'">true</ExcludedFromBuild>
+    <ClCompile Include="CEngineLoader.cpp" />
+    <ClCompile Include="CInterfaceLoader.cpp" />
+    <ClCompile Include="ClientDLLHooks.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Plugins.cpp" />
+    <ClCompile Include="CParms.cpp" />
+    <ClCompile Include="CRegistry.cpp" />
+    <ClCompile Include="DebugHelp.cpp" />
+    <ClCompile Include="interface.cpp" />
+    <ClCompile Include="Hooks.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Plugins.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='EXE_Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='EXE_Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CEngineLoader.h" />
+    <ClInclude Include="CInterfaceLoader.h" />
+    <ClInclude Include="CParms.h" />
+    <ClInclude Include="CRegistry.h" />
+    <ClInclude Include="DebugHelp.h" />
+    <ClInclude Include="interface.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="ClientDLLHooks.h" />
     <ClInclude Include="Hooks.h" />
-    <ClInclude Include="Meta_Api.h" />
     <ClInclude Include="Plugins.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="stdafx.h" />
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GPL.txt" />
+    <None Include="mmcl.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="mmcl.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

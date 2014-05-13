@@ -28,8 +28,16 @@
 */
 
 #pragma once
-
+#ifndef MMCL_MAIN
 #include <Windows.h>
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <stdlib.h>
+#include <stdio.h>
+
+
 #define HSPRITE DeletedWinapi_HSPRITE
 #include <wrect.h>
 #include <cl_dll.h>
@@ -47,6 +55,7 @@
 #include <triangleapi.h>
 #include <usercmd.h>
 #include <weaponinfo.h>
+#endif
 
 typedef enum {
 	MRES_UNSET = 0,
