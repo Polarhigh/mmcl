@@ -2,6 +2,7 @@
 #define CInterfaceLoader_h__
 
 
+/*
 #define GET_FACTORY(module_var,module_path)\
 	module_var=Sys_LoadModule(module_path);\
 	if(!module_var) FatalError("Can't load %s",module_path);\
@@ -11,15 +12,31 @@
 #define CREATE_AND_VALIDATE_INTERFACE(var,type,factory,name)\
 	var = (type)factory##Factory(name, NULL);\
 	if(!var)FatalError("Can't create " name " interfase");
+*/
+
+#define GET_FACTORY(module_var,module_path)\
+	module_var=Sys_LoadModule(module_path);\
+	CreateInterfaceFn module_var##Factory;\
+	if(module_var)\
+	{\
+		module_var##Factory=Sys_GetFactory(module_var);\
+	}\
+	else\
+	{\
+	   module_var##Factory=Sys_GetFactoryThis();\
+	}\
+
+#define CREATE_AND_VALIDATE_INTERFACE(var,type,factory,name)\
+	var = (type)factory##Factory(name, NULL);\
+	if(!var)var=(type)Sys_GetFactoryThis()(NULL_INTERFACE_VERSION,NULL);
 
 class CInterfaceLoader
 {
 public:
 	CInterfaceLoader();
 	~CInterfaceLoader();
-	void Init();
-	void ShutDown(bool unload=false);
-	bool Initialised(bool init=0);
+	bool Init();
+	void ShutDown();
 	CreateInterfaceFn FileSystemFactory(){if(!Loaded)Init();return gFileSystemFactory;}
 private:
 	CreateInterfaceFn gFileSystemFactory;
@@ -63,6 +80,12 @@ private:
 	IFileSystem *iFileSystem;
 };
 extern CInterfaceLoader gInterface;
+
+
+
+
+
+
 
 
 #endif // CInterfaceLoader_h__

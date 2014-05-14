@@ -55,6 +55,9 @@
 #include <triangleapi.h>
 #include <usercmd.h>
 #include <weaponinfo.h>
+#include <interface.h>
+#include <Interface.cpp>
+#include <IMetaInterface.h>
 #endif
 
 typedef enum {
@@ -139,3 +142,6 @@ typedef int (*META_DETACH_FN) (void);
 extern "C" int __declspec( dllexport ) GetExportFunctionsTable(cl_clientfunc_t *pClfuncs);
 extern "C" int __declspec( dllexport ) GetExportFunctionsTable_Post(cl_clientfunc_t *pClfuncs);
 typedef int (*tGetExportFunctionsTable)(cl_clientfunc_t *pClfuncs);
+
+extern "C" int __declspec( dllexport ) GetMetaFactory(CreateInterfaceFn Factory);
+typedef int (*tGetMetaFactory)(CreateInterfaceFn Factory);

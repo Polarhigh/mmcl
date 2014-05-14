@@ -4,15 +4,17 @@
 #include "CParms.h"
 #include "CRegistry.h"
 #include "DebugHelp.h"
-
+#include "Plugins.h"
+#include "Hooks.h"
+#include "Main.h"
 
 
 CEngineLoader EngineLoader;
 
-bool CEngineLoader::Init()
+void CEngineLoader::Init()
 {
-	if(this->Initialised())
-		return true;
+	if(this->bInitialised)
+		return;
 	if(!Parms.Initialised())
 		Parms.Init(GetCommandLineA());
 	if(!Registry.Initialised())
@@ -22,22 +24,14 @@ bool CEngineLoader::Init()
 		Registry.WriteString("EngineDLL", "sw.dll");
 	else if (Parms.Check("-gl") || Parms.Check("-d3d"))
 		Registry.WriteString("EngineDLL", "hw.dll");
-
 	this->bInitialised=true;
-	return true;
-}
-
-bool CEngineLoader::Initialised()
-{
-	return bInitialised;
 }
 
 char *CEngineLoader::GetEngineLib()
 {
-	if(!this->Initialised())
-		if(!this->Init())
-			FatalError("Can't init CEngineLoader");
-
+	if(!this->bInitialised)
+		this->Init();
+	
 		return Registry.ReadString("EngineDLL", "hw.dll");
 }
 
@@ -111,7 +105,7 @@ bool CEngineLoader::PreRun(bool bCreateMutex)
 			}
 		}
 	}
-	while(!gInterface.Initialised(true));
+	while(!gInterface.Init());
 
 	char *path = NULL;
 	GetLongPathNameA(filename, filename, MAX_PATH);
@@ -129,31 +123,35 @@ bool CEngineLoader::PreRun(bool bCreateMutex)
 
 void CEngineLoader::PostRun()
 {
-	WSACleanup();
+	
 	ReleaseMutex(this->Mutex);
 	CloseHandle(this->Mutex);
 	Parms.Shutdown();
 	Registry.Shutdown();
 }
 
-bool CEngineLoader::Run()
+bool CEngineLoader::Run(bool CreateMutex/*=false*/)
 {
 	this->Init();
 	while (1)
 	{
-		if(!EngineLoader.PreRun(true))
+		if(!EngineLoader.PreRun(CreateMutex))
 		{
 			this->PostRun();
 			return false;
 		}
-		static char retCmdLine[128];
-		Registry.WriteInt("CrashInitializingVideoMode", TRUE);
+		RedirectFunction(&hLoadLibraryA, LoadLibraryA, LoadLibraryA_HookHandler);
+		static char retCmdLine[128];		
 		int restart = gInterface.EngineAPI()->Run(g_hInstance, g_pszBaseDirectory, Parms.GetCommandLine(), retCmdLine, Sys_GetFactoryThis(), gInterface.FileSystemFactory());
+		for (unsigned int i = 0; i < gPluginsHModule.size(); i++)
+		{
+			if (gPluginsMetaDetach[i] != NULL) gPluginsMetaDetach[i]();
+			FreeLibrary(gPluginsHModule[i]);
+		}	
 		
-		
-		gInterface.ShutDown(true);
+		gInterface.ShutDown();
 		Sys_UnloadModule(Sys_LoadModule("client.dll"));//так надо.
-		Registry.WriteInt("CrashInitializingVideoMode", FALSE);
+		
 		if (restart == ENGINE_RESTART_NOTQUITTING || restart > ENGINE_RESTART_FAILURE)
 			break;
 
@@ -171,7 +169,7 @@ bool CEngineLoader::Run()
 					break;
 			}
 		}
-
+		
 		Parms.Remove("-sw");
 		Parms.Remove("-startwindowed");
 		Parms.Remove("-windowed");
@@ -197,6 +195,7 @@ bool CEngineLoader::Run()
 		Parms.Append(retCmdLine);
 	}
 	this->PostRun();
+	return true;
 }
 
 

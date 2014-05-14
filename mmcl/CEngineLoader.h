@@ -9,13 +9,12 @@ class CEngineLoader
 {
 public:
 	char *GetEngineLib();
-	bool Run();
+	bool Run(bool CreateMutex=false);
 	
 
 	
 private:
-	bool Init();
-	bool Initialised();
+	void Init();
 	bool PreRun(bool bCreateMutex=false);
 	void PostRun();
 	bool bInitialised;

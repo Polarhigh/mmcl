@@ -83,6 +83,8 @@ void LoadPlugins()
 
 		gPluginsClFuncs.push_back(pExportFuncs);
 		gPluginsClFuncs_Post.push_back(pExportFuncs_Post);
+		auto pMetaFactory = (tGetMetaFactory)GetProcAddress(hPlugin, "GetMetaFactory");
+		if(pMetaFactory!=NULL)pMetaFactory(Sys_GetFactoryThis());
 	}
 
 	file.close();

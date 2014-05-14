@@ -1,3 +1,6 @@
+#ifndef DebugHelp_h__
+#define DebugHelp_h__
+
 
 #define INT_AS_STR(x) #x 
 #define _LINE_AS_STR_(x) INT_AS_STR(x) //__LINE__ can only be converted to an actual number by going through this, otherwise the output is literally "__LINE__"
@@ -5,7 +8,7 @@
 #ifdef _DEBUG
 	
 	#define DbgMsg(pFormat,...) __DbgMsg__(__FILE__":"__FUNCTION__":"__SLINE__":"pFormat,__VA_ARGS__);
-	#define DbgMsgS(pFormat,...) __DbgMsg__(pFormat,__VA_ARGS__);
+#define DbgMsgS(pFormat,...) /##*DbMsgS*##/ __DbgMsg__(pFormat,__VA_ARGS__);
 	#define LOG_TRACE TraceLogger traceLogger(__FILE__, __FUNCTION__, __LINE__);
 
 #define FatalError(pFormat,...) {if(IsDebuggerPresent()){__asm{int 3}} \
@@ -37,3 +40,4 @@ private:
 	
 };
 
+#endif // DebugHelp_h__

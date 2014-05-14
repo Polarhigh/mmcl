@@ -4,7 +4,7 @@
 #include "CInterfaceLoader.h"
 #include "CEngineLoader.h"
 #include "CRegistry.h"
-
+#include "CNullInterface.h"
 
 
 CInterfaceLoader::CInterfaceLoader()
@@ -16,16 +16,16 @@ CInterfaceLoader::~CInterfaceLoader()
 {
 //	this->ShutDown();
 }
-void CInterfaceLoader::ShutDown(bool unload)
+void CInterfaceLoader::ShutDown()
 {
 	
 	if(!Loaded)
 		return;
 	Loaded=false;
-	if(unload)
+	if(true)
 	{
 		Sys_UnloadModule(mGameUI);
-		Sys_UnloadModule(mEngine);
+		//Sys_UnloadModule(mEngine);
 		Sys_UnloadModule(mVGUI2);
 		Sys_UnloadModule(mFileSystem);
 	}
@@ -43,20 +43,20 @@ void CInterfaceLoader::ShutDown(bool unload)
 	ivgInput=NULL;
 	ivgInputInternal=NULL;
 }
-void CInterfaceLoader::Init()
+bool CInterfaceLoader::Init()
 {
-	LOG_TRACE
-	if(Loaded)
-		return;
+	
+	if(this->Loaded)
+		return true;
 
 	mEngine=Sys_LoadModule(EngineLoader.GetEngineLib());\
-		if(!mEngine)
-		{
-			Registry.WriteInt("CrashInitializingVideoMode", TRUE);
-			return;
-		}
-		CreateInterfaceFn mEngineFactory=Sys_GetFactory(mEngine);\
-			if(!mEngineFactory) FatalError("Can't get %s factory",EngineLoader.GetEngineLib());
+	if(!mEngine)
+	{
+		Registry.WriteInt("CrashInitializingVideoMode", TRUE);
+		return false;
+	}
+	CreateInterfaceFn mEngineFactory=Sys_GetFactory(mEngine);\
+		if(!mEngineFactory) FatalError("Can't get %s factory",EngineLoader.GetEngineLib());
 	CREATE_AND_VALIDATE_INTERFACE(iBaseUI,IBaseUI*,mEngine,BASEUI_INTERFACE_VERSION);
 	CREATE_AND_VALIDATE_INTERFACE(iEngineAPI,IEngineAPI*,mEngine,VENGINE_LAUNCHER_API_VERSION);
 
@@ -64,7 +64,7 @@ void CInterfaceLoader::Init()
 	CREATE_AND_VALIDATE_INTERFACE(iGameUI,IGameUI*,mGameUI,GAMEUI_INTERFACE_VERSION);
 	CREATE_AND_VALIDATE_INTERFACE(iGameConsole,IGameConsole *,mGameUI,GAMECONSOLE_INTERFACE_VERSION);
 	CREATE_AND_VALIDATE_INTERFACE(iRunGameEngine,IRunGameEngine*,mGameUI,RUNGAMEENGINE_INTERFACE_VERSION);
-
+	
 	GET_FACTORY(mVGUI2,"vgui2");
 	CREATE_AND_VALIDATE_INTERFACE(ivgLocalize,vgui::ILocalize*,mVGUI2,VGUI_LOCALIZE_INTERFACE_VERSION);
 	CREATE_AND_VALIDATE_INTERFACE(ivgSystem,vgui::ISystem*,mVGUI2,VGUI_SYSTEM_INTERFACE_VERSION);
@@ -76,14 +76,8 @@ void CInterfaceLoader::Init()
 	GET_FACTORY(mFileSystem,"FileSystem_Stdio");
 	CREATE_AND_VALIDATE_INTERFACE(iFileSystem,IFileSystem*,mFileSystem,FILESYSTEM_INTERFACE_VERSION);
 	gFileSystemFactory=mFileSystemFactory;
-
-	Loaded=true;
-}
-bool CInterfaceLoader::Initialised(bool init)
-{
-	if(!this->Loaded&&init)
-		this->Init();
-	return Loaded;
+	this->Loaded=true;
+	return true;
 }
 
 
@@ -168,4 +162,5 @@ IFileSystem* CInterfaceLoader::FileSystem()
 
 
 
+EXPOSE_SINGLE_INTERFACE(CNullInterface,INullInterface,NULL_INTERFACE_VERSION);
 CInterfaceLoader gInterface;

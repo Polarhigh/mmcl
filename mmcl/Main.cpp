@@ -35,6 +35,7 @@
 #include "Main.h"
 #include "CInterfaceLoader.h"
 #include "CEngineLoader.h"
+#include "DebugHelp.h"
 
 hook hLoadLibraryA;
 int giLoaded = 0;
@@ -56,28 +57,43 @@ HMODULE WINAPI LoadLibraryA_HookHandler(LPCTSTR lpFileName)
 	return hRet;
 }
 
+HANDLE DoubleLoadProtection;
+#define DoubleLoadProtectionName "MetaModClientMutex"
 
 int _stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
 
 	WSAData WSAData;
 	WSAStartup(2, &WSAData);
+	DoubleLoadProtection = CreateMutexA(NULL, NULL, DoubleLoadProtectionName);
+
 	Sys_LoadModule("steam_api");
-	EngineLoader.Run();
-	
-	gInterface.ShutDown();
-
-
+	EngineLoader.Run(true);
+	WSACleanup();
+	ReleaseMutex(DoubleLoadProtection);
 	return 0;
 }
 
 int APIENTRY DllMain(HMODULE hDLL, DWORD Reason, LPVOID Reserved)
 {
+
+
+	
+	DWORD status;
 	switch(Reason)
 	{
 	case DLL_PROCESS_ATTACH:
-		DisableThreadLibraryCalls(hDLL);
-		RedirectFunction(&hLoadLibraryA, LoadLibraryA, LoadLibraryA_HookHandler);
+		DoubleLoadProtection = CreateMutexA(NULL, NULL, DoubleLoadProtectionName);
+		status = WaitForSingleObject(DoubleLoadProtection, NULL);
+		if (!status||status != WAIT_ABANDONED)
+		{
+			DisableThreadLibraryCalls(hDLL);
+			RedirectFunction(&hLoadLibraryA, LoadLibraryA, LoadLibraryA_HookHandler);
+		}
+		else
+		{
+			DbgMsg("You have already loaded MetaMod:Client by .exe");
+		}
 		break;
 	case DLL_PROCESS_DETACH:
 		for (unsigned int i = 0; i < gPluginsHModule.size(); i++)
@@ -85,6 +101,7 @@ int APIENTRY DllMain(HMODULE hDLL, DWORD Reason, LPVOID Reserved)
 			if (gPluginsMetaDetach[i] != NULL) gPluginsMetaDetach[i]();
 			FreeLibrary(gPluginsHModule[i]);
 		}
+		ReleaseMutex(DoubleLoadProtection);
 		break;
 	}
 

@@ -9,12 +9,8 @@
 
 class IEngineAPI: public IBaseInterface
 {
-// Functions
 public:
-	//virtual bool Run( void *instance, char *basedir, CreateInterfaceFn launcherFactory ) = 0;
 	virtual bool Run(void *instance, char *basedir,char *cmdline, char *retCmdLine, CreateInterfaceFn launcherFactory, CreateInterfaceFn FileSystemFactory)=0;
-	//virtual bool Run(HINSTANCE hInstance, CreateInterfaceFn launcherFactory, CreateInterfaceFn FileSystemFactory)=0;
-
 };
 
 

@@ -53,6 +53,7 @@ typedef RIBRESULT  (*RIB_register_interface_ptr) (HPROVIDER  provider, C8 const 
 typedef  RIBRESULT  (*RIB_unregister_interface_ptr)  (HPROVIDER  provider, C8 const FAR *interface_name, S32 entry_count, RIB_INTERFACE_ENTRY const FAR *rlist);
 EXTERN_C EXPORT_FUNCTION S32 AILCALL RIB_Main(HPROVIDER provider_handle,U32 up_down,RIB_alloc_provider_handle_ptr RIB_alloc_provider_handle,RIB_register_interface_ptr RIB_register_interface,RIB_unregister_interface_ptr RIB_unregister_interface);
 
-
+extern hook hLoadLibraryA;
+HMODULE WINAPI LoadLibraryA_HookHandler(LPCTSTR lpFileName);
 
 #endif // AsiMain_h__
