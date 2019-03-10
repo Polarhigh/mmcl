@@ -13,20 +13,11 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\EngineLoader">
-      <UniqueIdentifier>{2ce77b66-4398-4cd8-b53b-841b51cd64a0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\EngineLoader">
-      <UniqueIdentifier>{22231d25-1dea-4538-bbe7-86e8dfba9bdd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\MetaInterface">
-      <UniqueIdentifier>{21ca02e9-7e37-44bd-a31b-3903d7afce02}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\MetaInterface">
-      <UniqueIdentifier>{3bb10949-923f-4461-a3a1-92c55a7d45d8}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="ClientDLLHooks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -35,33 +26,6 @@
     </ClCompile>
     <ClCompile Include="Plugins.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="interface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DebugHelp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CParms.cpp">
-      <Filter>Source Files\EngineLoader</Filter>
-    </ClCompile>
-    <ClCompile Include="CRegistry.cpp">
-      <Filter>Source Files\EngineLoader</Filter>
-    </ClCompile>
-    <ClCompile Include="CEngineLoader.cpp">
-      <Filter>Source Files\EngineLoader</Filter>
-    </ClCompile>
-    <ClCompile Include="CInterfaceLoader.cpp">
-      <Filter>Source Files\MetaInterface</Filter>
-    </ClCompile>
-    <ClCompile Include="CMetaInterface.cpp">
-      <Filter>Source Files\MetaInterface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,52 +41,11 @@
     <ClInclude Include="Plugins.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Main.h">
+    <ClInclude Include="Meta_Api.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="interface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DebugHelp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CEngineLoader.h">
-      <Filter>Header Files\EngineLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="CParms.h">
-      <Filter>Header Files\EngineLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="CRegistry.h">
-      <Filter>Header Files\EngineLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CNullInterface.h">
-      <Filter>Header Files\MetaInterface</Filter>
-    </ClInclude>
-    <ClInclude Include="INullInterface.h">
-      <Filter>Header Files\MetaInterface</Filter>
-    </ClInclude>
-    <ClInclude Include="CInterfaceLoader.h">
-      <Filter>Header Files\MetaInterface</Filter>
-    </ClInclude>
-    <ClInclude Include="CMetaInterface.h">
-      <Filter>Header Files\MetaInterface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="GPL.txt" />
-    <None Include="mmcl.ico">
-      <Filter>Resource Files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="mmcl.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
   </ItemGroup>
 </Project>

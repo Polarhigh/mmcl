@@ -26,7 +26,7 @@
 *  you do not wish to do so, delete this exception statement from your
 *  version.
 */
-#include "stdafx.h"
+
 #include "ClientDLLHooks.h"
 #include "Hooks.h"
 #include "Plugins.h"

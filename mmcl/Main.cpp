@@ -27,15 +27,9 @@
 *  version.
 */
 
-
-#include "stdafx.h"
 #include "ClientDLLHooks.h"
 #include "Hooks.h"
 #include "Plugins.h"
-#include "Main.h"
-#include "CInterfaceLoader.h"
-#include "CEngineLoader.h"
-#include "DebugHelp.h"
 
 hook hLoadLibraryA;
 int giLoaded = 0;
@@ -57,43 +51,13 @@ HMODULE WINAPI LoadLibraryA_HookHandler(LPCTSTR lpFileName)
 	return hRet;
 }
 
-HANDLE DoubleLoadProtection;
-#define DoubleLoadProtectionName "MetaModClientMutex"
-
-int _stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
-{
-
-	WSAData WSAData;
-	WSAStartup(2, &WSAData);
-	DoubleLoadProtection = CreateMutexA(NULL, NULL, DoubleLoadProtectionName);
-
-	Sys_LoadModule("steam_api");
-	EngineLoader.Run(true);
-	WSACleanup();
-	ReleaseMutex(DoubleLoadProtection);
-	return 0;
-}
-
 int APIENTRY DllMain(HMODULE hDLL, DWORD Reason, LPVOID Reserved)
 {
-
-
-	
-	DWORD status;
 	switch(Reason)
 	{
 	case DLL_PROCESS_ATTACH:
-		DoubleLoadProtection = CreateMutexA(NULL, NULL, DoubleLoadProtectionName);
-		status = WaitForSingleObject(DoubleLoadProtection, NULL);
-		if (!status||status != WAIT_ABANDONED)
-		{
-			DisableThreadLibraryCalls(hDLL);
-			RedirectFunction(&hLoadLibraryA, LoadLibraryA, LoadLibraryA_HookHandler);
-		}
-		else
-		{
-			DbgMsg("You have already loaded MetaMod:Client by .exe");
-		}
+		DisableThreadLibraryCalls(hDLL);
+		RedirectFunction(&hLoadLibraryA, LoadLibraryA, LoadLibraryA_HookHandler);
 		break;
 	case DLL_PROCESS_DETACH:
 		for (unsigned int i = 0; i < gPluginsHModule.size(); i++)
@@ -101,36 +65,10 @@ int APIENTRY DllMain(HMODULE hDLL, DWORD Reason, LPVOID Reserved)
 			if (gPluginsMetaDetach[i] != NULL) gPluginsMetaDetach[i]();
 			FreeLibrary(gPluginsHModule[i]);
 		}
-		ReleaseMutex(DoubleLoadProtection);
 		break;
 	}
 
 	return TRUE;
-}
-
-
-/*Basis for .asi
-Doesn't used yet because we need to find some other way to get cl_enginefunc_t address
-Initialize_HookHandler hook would not work, because .asi-files loads after it.
-*/
-EXPORT_FUNCTION S32 AILCALL RIB_Main(	
-	HPROVIDER provider_handle,
-	U32 up_down,
-	RIB_alloc_provider_handle_ptr RIB_alloc_provider_handle,
-	RIB_register_interface_ptr RIB_register_interface,
-	RIB_unregister_interface_ptr RIB_unregister_interface
-	)
-{
-		
-		if (up_down)
-		{
-			
-		}
-		else
-		{
-			
-		}
-		return TRUE;
 }
 
 extern "C" int __declspec( dllexport ) Init() { return 1; }

@@ -26,11 +26,13 @@
 *  you do not wish to do so, delete this exception statement from your
 *  version.
 */
-#include "stdafx.h"
+
 #include "ClientDLLHooks.h"
 #include "Plugins.h"
 #include "Types.h"
-
+#include <iostream>
+#include <fstream>
+#include <string>
 
 meta_globals_t *gpMetaGlobals;
 
@@ -83,8 +85,6 @@ void LoadPlugins()
 
 		gPluginsClFuncs.push_back(pExportFuncs);
 		gPluginsClFuncs_Post.push_back(pExportFuncs_Post);
-		auto pMetaFactory = (tGetMetaFactory)GetProcAddress(hPlugin, "GetMetaFactory");
-		if(pMetaFactory!=NULL)pMetaFactory(Sys_GetFactoryThis());
 	}
 
 	file.close();

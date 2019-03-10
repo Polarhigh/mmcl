@@ -28,16 +28,8 @@
 */
 
 #pragma once
-#ifndef MMCL_MAIN
+
 #include <Windows.h>
-
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <stdlib.h>
-#include <stdio.h>
-
-
 #define HSPRITE DeletedWinapi_HSPRITE
 #include <wrect.h>
 #include <cl_dll.h>
@@ -55,10 +47,6 @@
 #include <triangleapi.h>
 #include <usercmd.h>
 #include <weaponinfo.h>
-#include <interface.h>
-#include <Interface.cpp>
-#include <IMetaInterface.h>
-#endif
 
 typedef enum {
 	MRES_UNSET = 0,
@@ -142,6 +130,3 @@ typedef int (*META_DETACH_FN) (void);
 extern "C" int __declspec( dllexport ) GetExportFunctionsTable(cl_clientfunc_t *pClfuncs);
 extern "C" int __declspec( dllexport ) GetExportFunctionsTable_Post(cl_clientfunc_t *pClfuncs);
 typedef int (*tGetExportFunctionsTable)(cl_clientfunc_t *pClfuncs);
-
-extern "C" int __declspec( dllexport ) GetMetaFactory(CreateInterfaceFn Factory);
-typedef int (*tGetMetaFactory)(CreateInterfaceFn Factory);
